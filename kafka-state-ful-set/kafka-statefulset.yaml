@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: zookeeper
+  namespace: default
+  labels:
+    app: zookeeper
+spec:
+  serviceName: zokeeper-svc
+  replicas: 1
+  selector:
+    matchLabels:
+      app: zookeeper-app
+  template:
+    metadata:
+      labels:
+        app: zookeeper-app
+    spec:
+      containers:
+        - name: zookeeper
+          image: confluentinc/cp-zookeeper:7.3.2
+          volumeMounts:
+            - name: datadir
+              mountPath: /data
+          ports:
+            - containerPort: 2181
+          env:
+            - name: ZOOKEEPER_CLIENT_PORT
+              value: "2181"
+            - name: ZOOKEEPER_SERVER_ID
+              value: "1"
+            - name: ZOOKEEPER_SERVERS
+              value: "zookeeper-1:2888:3888"
+  volumeClaimTemplates:
+    - metadata:
+        name: datadir
+      spec:
+        storageClassName: zookeeper-local-storage-sc
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 2Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: zookeeper-svc
+  labels:
+    app: zookeeper-app
+spec:
+  ports:
+    - name: zookeeper
+      port: 9902
+  clusterIP: None
+  selector:
+    app: zookeeper-app
