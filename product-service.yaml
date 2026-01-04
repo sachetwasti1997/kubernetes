@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: product-service-depl
+  labels:
+    app: product-service
+    type: product-service-app
+spec:
+  template:
+    metadata:
+      labels:
+        app: product-service
+        type: product-service-depl
+    spec:
+      containers:
+      - name: product-service
+        image: sachetwasti61/product-service
+        ports:
+        - containerPort: 8080
+  replicas: 2
+  selector:
+    matchLabels:
+      app: product-service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: product-svc
+spec:
+  selector:
+    app: product-service
+  ports:
+  - port: 8080
+    targetPort: 8080
+

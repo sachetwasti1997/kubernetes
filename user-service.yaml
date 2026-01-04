@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-service-depl
+  labels:
+    app: user-service
+    type: user-service-depl
+spec:
+  template:
+    metadata:
+      labels:
+        app: user-service
+        type: user-service-depl
+    spec:
+      containers:
+      - name: user-service
+        image: sachetwasti61/ecomm-user-service
+        ports:
+        - containerPort: 8080
+  replicas: 2
+  selector:
+    matchLabels:
+      type: user-service-depl
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: user-svc
+spec:
+  selector:
+    app: user-service
+    type: user-service-depl
+  ports:
+  - port: 8080
+    targetPort: 8080
+
