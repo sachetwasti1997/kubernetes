@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: mysql-local-pv
+  name: mysql-local-pv1
 spec:
   capacity:
     storage: 50Gi

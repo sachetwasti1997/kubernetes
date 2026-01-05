@@ -17,7 +17,7 @@ spec:
         image: sachetwasti61/ecomm-user-service
         ports:
         - containerPort: 8080
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       type: user-service-depl

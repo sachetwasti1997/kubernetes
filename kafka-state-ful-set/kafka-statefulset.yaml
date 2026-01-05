@@ -6,15 +6,15 @@ metadata:
   labels:
     app: zookeeper
 spec:
-  serviceName: zokeeper-svc
+  serviceName: zookeeper
   replicas: 1
   selector:
     matchLabels:
-      app: zookeeper-app
+      app: zookeeper
   template:
     metadata:
       labels:
-        app: zookeeper-app
+        app: zookeeper
     spec:
       containers:
         - name: zookeeper
@@ -44,13 +44,80 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: zookeeper-svc
+  name: zookeeper
   labels:
-    app: zookeeper-app
+    app: zookeeper
 spec:
   ports:
-    - name: zookeeper
-      port: 9902
+    - port: 2181
+      targetPort: 2181
   clusterIP: None
   selector:
-    app: zookeeper-app
+    app: zookeeper
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: kafka
+  namespace: default
+  labels:
+    app: kafka
+spec:
+  replicas: 3
+  serviceName: kafka-svc
+  selector:
+    matchLabels:
+      app: kafka-app
+  template:
+    metadata:
+      labels:
+        app: kafka-app
+    spec:
+      containers:
+        - name: kafka
+          image: confluentinc/cp-kafka:7.3.2
+          volumeMounts:
+            - mountPath: /mnt/kafka
+              name: data
+          ports:
+            - containerPort: 9092
+            - containerPort: 29092
+          env:
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: KAFKA_ZOOKEEPER_CONNECT
+              value: "zookeeper-0.zookeeper.default.svc.cluster.local:2181"
+            - name: KAFKA_LISTENER_SECURITY_PROTOCOL_MAP
+              value: "INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT"
+            - name: KAFKA_LISTENERS
+              value: "INTERNAL://0.0.0.0:9092,EXTERNAL://0.0.0.0:9094"
+            - name: KAFKA_ADVERTISED_LISTENERS
+              value: "INTERNAL://$(POD_NAME).kafka-svc.default.svc.cluster.local:9092,EXTERNAL://$(POD_NAME).kafka-svc.default.svc.cluster.local:9094"
+            - name: KAFKA_INTER_BROKER_LISTENER_NAME
+              value: "INTERNAL"
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        storageClassName: kafka-local-storage
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 1Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kafka-svc
+  labels:
+    app: kafka-app
+spec:
+  ports:
+    - name: kafka
+      port: 9092
+      targetPort: 9092
+  clusterIP: None
+  selector:
+    app: kafka-app

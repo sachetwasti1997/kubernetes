@@ -11,4 +11,4 @@ spec:
   persistentVolumeReclaimPolicy: Delete
   storageClassName: kafka-local-storage
   hostPath:
-    path: "/Volumes/SachetSSD/kube/kafka"
+    path: "/Volumes/SachetSSD/kube/kafka-2"
