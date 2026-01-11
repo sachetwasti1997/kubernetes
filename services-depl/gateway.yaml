@@ -1,0 +1,13 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: example-gateway
+spec:
+  gatewayClassName: example-gateway-class
+  listeners:
+    - name: http
+      port: 80 #load balancer created will be listening on the port 80
+      protocol: HTTP
+      allowedRoutes:
+        namespaces:
+          from: All

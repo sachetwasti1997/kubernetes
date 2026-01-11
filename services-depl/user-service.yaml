@@ -27,10 +27,12 @@ kind: Service
 metadata:
   name: user-svc
 spec:
+  type: NodePort
   selector:
     app: user-service
     type: user-service-depl
   ports:
   - port: 8080
     targetPort: 8080
+    nodePort: 32000
 

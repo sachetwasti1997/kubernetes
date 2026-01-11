@@ -1,0 +1,19 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: backend
+spec:
+  parentRefs:
+    - name: example-gateway
+      port: 80
+  hostnames:
+  - "ecomm.com"
+  rules:
+    - matches:
+      - path:
+          type: PathPrefix
+          value: "/product"
+      backendRefs:
+        - name: product-svc
+          port: 8080
+
