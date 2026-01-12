@@ -27,12 +27,12 @@ kind: Service
 metadata:
   name: product-svc
 spec:
-  type: ClusterIP
+  type: NodePort
   selector:
     app: product-service
     type: product-service-depl
   ports:
   - port: 8080
     targetPort: 8080
-    protocol: TCP
+    nodePort: 32500
 
