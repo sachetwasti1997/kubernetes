@@ -13,9 +13,10 @@ spec:
             - /bin/sh
             - -c
             - |
-              kafka-topics --bootstrap-server kafka-0.kafka-svc.default.svc.cluster.local:9094 --list && \
-              kafka-topics --bootstrap-server kafka-0.kafka-svc.default.svc.cluster.local:9094 --create --if-not-exists --topic user-add-product --replication-factor 3 --partitions 3 && \
-              kafka-topics --bootstrap-server kafka-0.kafka-svc.default.svc.cluster.local:9094 --create --if-not-exists --topic user-buy-product --replication-factor 3 --partitions 3 && \
-              kafka-topics --bootstrap-server kafka-0.kafka-svc.default.svc.cluster.local:9094 --create --if-not-exists --topic user-cancel-product --replication-factor 3 --partitions 3 && \
-              kafka-topics --bootstrap-server kafka-0.kafka-svc.default.svc.cluster.local:9094 --list
+              kafka-topics --bootstrap-server kafka-0.kafka-svc.default.svc.cluster.local:9092 --list && \
+              kafka-topics --bootstrap-server kafka-0.kafka-svc.default.svc.cluster.local:9092 --create --if-not-exists --topic user-add-product --replication-factor 3 --partitions 3 && \
+              kafka-topics --bootstrap-server kafka-0.kafka-svc.default.svc.cluster.local:9092 --create --if-not-exists --topic user-buy-product --replication-factor 3 --partitions 3 && \
+              kafka-topics --bootstrap-server kafka-0.kafka-svc.default.svc.cluster.local:9092 --create --if-not-exists --topic user-cancel-product --replication-factor 3 --partitions 3 && \
+              kafka-topics --bootstrap-server kafka-0.kafka-svc.default.svc.cluster.local:9092 --create --if-not-exists --topic user-product-review --replication-factor 3 --partitions 3 && \
+              kafka-topics --bootstrap-server kafka-0.kafka-svc.default.svc.cluster.local:9092 --list
       restartPolicy: OnFailure
