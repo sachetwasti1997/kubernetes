@@ -1,0 +1,43 @@
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+nodes:
+  - role: control-plane
+    extraMounts:
+      - hostPath: /Volumes/SachetSSD/kube/mysql
+        containerPath: /var/lib/mysql
+  - role: control-plane
+    extraMounts:
+      - hostPath: /Volumes/SachetSSD/kube/mysql
+        containerPath: /var/lib/mysql
+  - role: control-plane
+    extraMounts:
+      - hostPath: /Volumes/SachetSSD/kube/mysql
+        containerPath: /var/lib/mysql
+  - role: worker
+    extraMounts:
+      - hostPath: /Volumes/SachetSSD/kube/mysql
+        containerPath: /var/lib/mysql
+  - role: worker
+    extraMounts:
+      - hostPath: /Volumes/SachetSSD/kube/mysql
+        containerPath: /var/lib/mysql
+  - role: worker
+    extraMounts:
+      - hostPath: /Volumes/SachetSSD/kube/mysql
+        containerPath: /var/lib/mysql
+  - role: worker
+    extraMounts:
+      - hostPath: /Volumes/SachetSSD/kube/mysql
+        containerPath: /var/lib/mysql
+  - role: worker
+    extraMounts:
+      - hostPath: /Volumes/SachetSSD/kube/mysql
+        containerPath: /var/lib/mysql
+  - role: worker
+    extraMounts:
+      - hostPath: /Volumes/SachetSSD/kube/mysql
+        containerPath: /var/lib/mysql
+  - role: worker
+    extraMounts:
+      - hostPath: /Volumes/SachetSSD/kube/mysql
+        containerPath: /var/lib/mysql

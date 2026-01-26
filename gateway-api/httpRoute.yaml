@@ -6,8 +6,8 @@ spec:
   parentRefs:
     - name: example-gateway
       port: 80
-  hostnames:
-  - "ecomm.com"
+#  hostnames:
+#  - ""
   rules:
     - matches:
       - path:
@@ -15,5 +15,12 @@ spec:
           value: "/product"
       backendRefs:
         - name: product-svc
+          port: 8080
+    - matches:
+        - path:
+            type: PathPrefix
+            value: "/user"
+      backendRefs:
+        - name: user-svc
           port: 8080
 
