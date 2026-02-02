@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-service-depl
+  labels:
+    app: order-service
+    type: order-service-app
+spec:
+  template:
+    metadata:
+      labels:
+        app: order-service
+        type: order-service-depl
+    spec:
+      containers:
+        - name: order-service
+          image: sachetwasti61/ecomm-order-service
+          ports:
+            - containerPort: 8080
+  replicas: 1
+  selector:
+    matchLabels:
+      app: order-service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: order-svc
+spec:
+  type: ClusterIP
+  selector:
+    app: order-service
+    type: order-service-depl
+  ports:
+    - port: 8080
+      targetPort: 8080

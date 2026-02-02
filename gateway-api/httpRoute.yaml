@@ -19,6 +19,13 @@ spec:
     - matches:
         - path:
             type: PathPrefix
+            value: "/order"
+      backendRefs:
+        - name: order-svc
+          port: 8080
+    - matches:
+        - path:
+            type: PathPrefix
             value: "/user"
       backendRefs:
         - name: user-svc
