@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payment-service-depl
+  labels:
+    app: payment-service
+    type: payment-service-app
+spec:
+  template:
+    metadata:
+      labels:
+        app: payment-service
+        type: payment-service-depl
+    spec:
+      containers:
+        - name: payment-service
+          image: sachetwasti61/ecommerce-payment-service
+          ports:
+            - containerPort: 8080
+  replicas: 1
+  selector:
+    matchLabels:
+      app: payment-service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: payment-svc
+spec:
+  type: ClusterIP
+  selector:
+    app: payment-service
+    type: payment-service-depl
+  ports:
+    - port: 8080
+      targetPort: 8080
+

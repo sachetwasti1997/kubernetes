@@ -30,4 +30,11 @@ spec:
       backendRefs:
         - name: user-svc
           port: 8080
+    - matches:
+        - path:
+            type: PathPrefix
+            value: "/payment"
+      backendRefs:
+        - name: payment-svc
+          port: 8080
 
