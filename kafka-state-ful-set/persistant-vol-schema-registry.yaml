@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: kafka-local-pv0
+  name: schema-local-pv
 spec:
   capacity:
     storage: 5Gi
@@ -9,6 +9,6 @@ spec:
   accessModes:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Delete
-  storageClassName: kafka-local-storage
+  storageClassName: schema-local-storage
   hostPath:
-    path: "/Volumes/SachetSSD/kube/kafka/kafka-0"
+    path: "/Volumes/SachetSSD/kube/kafka/schemareg"

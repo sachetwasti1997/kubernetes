@@ -14,9 +14,9 @@ spec:
             - -c
             - |
               kafka-topics --bootstrap-server kafka-0.kafka-svc.default.svc.cluster.local:9092 --list && \
-              kafka-topics --bootstrap-server kafka-0.kafka-svc.default.svc.cluster.local:9092 --create --if-not-exists --topic order-created --replication-factor 3 --partitions 3 && \
-              kafka-topics --bootstrap-server kafka-0.kafka-svc.default.svc.cluster.local:9092 --create --if-not-exists --topic order-cancelled --replication-factor 3 --partitions 3 && \
-              kafka-topics --bootstrap-server kafka-0.kafka-svc.default.svc.cluster.local:9092 --create --if-not-exists --topic update-product --replication-factor 3 --partitions 3 && \
-              kafka-topics --bootstrap-server kafka-0.kafka-svc.default.svc.cluster.local:9092 --create --if-not-exists --topic user-add-product --replication-factor 3 --partitions 3 && \
+              kafka-topics --bootstrap-server kafka-0.kafka-svc.default.svc.cluster.local:9092 --create --if-not-exists --topic order-created --replication-factor 3 --partitions 3 --config cleanup.policy=compact && \
+              kafka-topics --bootstrap-server kafka-0.kafka-svc.default.svc.cluster.local:9092 --create --if-not-exists --topic order-cancelled --replication-factor 3 --partitions 3 --config cleanup.policy=compact && \
+              kafka-topics --bootstrap-server kafka-0.kafka-svc.default.svc.cluster.local:9092 --create --if-not-exists --topic update-product --replication-factor 3 --partitions 3 --config cleanup.policy=compact && \
+              kafka-topics --bootstrap-server kafka-0.kafka-svc.default.svc.cluster.local:9092 --create --if-not-exists --topic user-add-product --replication-factor 3 --partitions 3 --config cleanup.policy=compact && \
               kafka-topics --bootstrap-server kafka-0.kafka-svc.default.svc.cluster.local:9092 --list
       restartPolicy: OnFailure

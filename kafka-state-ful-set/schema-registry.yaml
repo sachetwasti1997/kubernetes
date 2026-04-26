@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    service: schema-registry
+  name: schema-registry
+spec:
+  replicas: 1
+  serviceName: schema-svc
+  selector:
+    matchLabels:
+      app: schema-registry-app
+  template:
+    metadata:
+      labels:
+        app: schema-registry-app
+    spec:
+      containers:
+        - env:
+            - name: SCHEMA_REGISTRY_HOST_NAME
+              value: "schema-registry"
+            - name: SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS
+              value: kafka-0.kafka-svc.default.svc.cluster.local:9094,kafka-1.kafka-svc.default.svc.cluster.local:9094,kafka-2.kafka-svc.default.svc.cluster.local:9094
+            - name: SCHEMA_REGISTRY_LISTENERS
+              value: "http://0.0.0.0:30081"
+          image: confluentinc/cp-schema-registry:7.3.2
+          name: schema-registry
+          volumeMounts:
+            - mountPath: /data
+              name: data
+          ports:
+            - containerPort: 30081
+          resources: {}
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        storageClassName: schema-local-storage
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 1Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: schema-svc
+  labels:
+    app: schema-registry-app
+spec:
+  ports:
+    - name: schema
+      port: 30081
+      targetPort: 30081
+  clusterIP: None
+  selector:
+    app: schema-registry-app

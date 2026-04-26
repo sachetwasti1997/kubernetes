@@ -4,10 +4,10 @@ metadata:
   name: backend
 spec:
   parentRefs:
-    - name: example-gateway
+    - name: envoy-gateway
       port: 80
-#  hostnames:
-#  - ""
+  hostnames:
+  - "www.product.com"
   rules:
     - matches:
       - path:
