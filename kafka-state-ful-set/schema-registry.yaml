@@ -23,6 +23,8 @@ spec:
               value: kafka-0.kafka-svc.default.svc.cluster.local:9094,kafka-1.kafka-svc.default.svc.cluster.local:9094,kafka-2.kafka-svc.default.svc.cluster.local:9094
             - name: SCHEMA_REGISTRY_LISTENERS
               value: "http://0.0.0.0:30081"
+            - name: SCHEMA_REGISTRY_SCHEMA_COMPATIBILITY_LEVEL
+              value: "full"
           image: confluentinc/cp-schema-registry:7.3.2
           name: schema-registry
           volumeMounts:
