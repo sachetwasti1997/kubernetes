@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: expiration-listener-depl
+  labels:
+    app: expiration-listener-service
+    type: expiration-listener-app
+spec:
+  template:
+    metadata:
+      labels:
+        app: expiration-listener
+        type: expiration-listener-depl
+    spec:
+      containers:
+        - name: expiration-listener
+          image: sachetwasti61/ecomm-expiration-listener
+          ports:
+            - containerPort: 8080
+  replicas: 1
+  selector:
+    matchLabels:
+      app: expiration-listener
